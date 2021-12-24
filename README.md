@@ -1,39 +1,59 @@
 # cilix_rdc
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+## 介绍
 
-#### 软件架构
-软件架构说明
+> 基于 libuv 的 RDC（远程设备调用）框架，配合 [gilix](https://gitee.com/lindorof/gilix) 服用。
 
+- 一切从简，把复杂度放在 [gilix](https://gitee.com/lindorof/gilix) 
+- cilix_rdc 所有逻辑只为远程设备调用服务
+- 统一并简化 C 设备库的接口参数
+- 固定按照 tcp_sys 协议传输
 
-#### 安装教程
+> rdc 位于 [gilix](https://gitee.com/lindorof/gilix) 下游，由于万恶的基于 C 的 lfs 规范存在，所以上游需要 spi_ap 这个 C 库来配合
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- 一切从简，只为符合万恶的基于 C 的 lfs 接口
+- 固定按照 tcp_sys 协议传输，与 [gilix](https://gitee.com/lindorof/gilix) 交互
+- 复杂度放在 [gilix](https://gitee.com/lindorof/gilix) ，因此 reg/dereg 的逻辑不用 spi_ap 管理
+- 因此 spi_ap 的核心工作是数据编解码和传输
 
-#### 使用说明
+## 编译和适配
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+> 编译
 
-#### 参与贡献
+cilix_rdc 基于 C 实现，使用 CMake 编译：
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+```shell
+cmake .
+make
+```
 
+> 成果
 
-#### 特技
+编译成果存储路径如下，由 CMake 自动检测并生成文件夹名称：
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- libs
+    - Linux
+        - x86_64
+        - aarm64
+    - Darwin
+        - x86
+        - ...
+    - ...
+
+> 适配
+
+目前已编译、适配、并测试过的 OS+CPU 如下，其它系统下编译时可能涉及轻微的代码修正：
+
+- OS
+    - Ubuntu
+    - 麒麟OS
+    - 统信UOS
+    - MacOS
+- CPU
+    - x86_64
+    - aarm64
+
+---
+
+*lindorof . 2021.12.08* 
+
