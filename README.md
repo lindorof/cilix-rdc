@@ -16,6 +16,20 @@
 - 复杂度放在 [gilix](https://github.com/lindorof/gilix) ，因此 reg/dereg 的逻辑不用 spi_ap 管理
 - 因此 spi_ap 的核心工作是数据编解码和传输
 
+## 使用
+
+- 一个 rdc 进程管理一个物理设备
+- 命令行参数说明
+  1. ``-init```` ，表示启动和加载
+  2. ```PhyName``` ，即物理名
+  3. ```LibName``` ，即设备库名称，不需要文件后缀
+  4. ```IP``` ，即监听的 IP 地址
+  5. ```Port``` ，即监听的端口号
+- 命令行参数举例
+  ``` Shell
+  ./cilix_rdc -init PhyNameXXX LibNameXXX 127.0.0.1 35001
+  ```
+
 ## 编译和适配
 
 > 编译
