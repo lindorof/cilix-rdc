@@ -152,6 +152,10 @@ ipch/
 *.vspx
 *.sap
 
+# Visual Studio profiler @20220520
+*.vcxproj
+*.vcxproj.filters
+
 # Visual Studio Trace Files
 *.e2e
 
