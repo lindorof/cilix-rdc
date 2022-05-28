@@ -372,12 +372,15 @@ typedef struct sp_cp_json_s {
 } sp_cp_json_t;
 
 struct sp_sapp_cp_s {
+	void* def;
 };
 
 struct sp_spip_cp_s {
+	void* def;
 };
 
 struct sp_dlib_cp_s {
+	void* def;
 };
 
 #define SP_CP_FIELDS                \
