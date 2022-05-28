@@ -41,7 +41,9 @@ int cilix_test_x(int argc, char **argv)
     _ARGIS("-timeout") {
         cilix_test_timeout();
     }
-
+	_ARGIS("-json") {
+		cilix_test_json();
+	}
     return 0;  
 }
 
