@@ -5,12 +5,13 @@
 
 /***************************************************/
 
-#ifdef _CILIX_OS_WINDOWS
+#ifdef _CILIX_OS_Windows
 
 //***** slash
 #define CILIX_PATH_SLASH '\\'
 
 //***** socket
+#define CILIX_SOCKET_ADDR_H <winsock2.h>
 
 //***** string
 #define CILIX_STRING_H <string.h>
