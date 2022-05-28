@@ -199,7 +199,7 @@ int test_b64_decodef(void) {
 		return 0;
 	
 	int c, l=0;
-	char out[j+1];
+	char* out = (char*)malloc(j + 1);
 	while(c!=EOF) {
 		c=fgetc(pFile);
 		if (c==EOF)
@@ -210,9 +210,11 @@ int test_b64_decodef(void) {
 	remove("B64_TEST02B.tmp");
 	printf("\tComparing \"%s\" to \"",HEXSTR_B); hexprint(out,j); printf("\" : ");
 	char r_b[] = HEXNUM_B;
-	if (compare(r_b,out,j))
+	if (compare(r_b, out, j)) {
+		free(out);
 		return 1;
-	
+
+	}free(out);
 	return 0;
 }
 
