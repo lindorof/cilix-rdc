@@ -81,7 +81,7 @@ typedef int (*___dlib_func)(void* json_in, void* json_out);
 typedef void (*___dlib_fini)(void);
 
 #define DLIB_INVOKE "Invoke"
-typedef int(*___dlib_invoke)(void* json_in, void** json_out);
+typedef int(*___dlib_invoke)(char* func, void* json_in, void** json_out);
 
 /*
 --------------------------------------------------------------------------------
