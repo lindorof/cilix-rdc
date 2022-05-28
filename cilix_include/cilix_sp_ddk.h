@@ -80,6 +80,9 @@ typedef int (*___dlib_func)(void* json_in, void* json_out);
 #define DLIB_FINI "Fini"
 typedef void (*___dlib_fini)(void);
 
+#define DLIB_INVOKE "Invoke"
+typedef int(*___dlib_invoke)(void* json_in, void** json_out);
+
 /*
 --------------------------------------------------------------------------------
 interfaces of sp_cp
