@@ -89,13 +89,13 @@ list(APPEND cilix_cflags ${lint-no-hides-global-msvc})
 list(APPEND cilix_cflags ${lint-no-conditional-assignment-msvc})
 list(APPEND cilix_cflags ${lint-no-unsafe-msvc})
 
-list(APPEND cilix_cflags -Wno-implicit-fallthrough)
-list(APPEND cilix_cflags -Wno-unused-result)
 
 if(WIN32)
     list(APPEND cilix_defines WIN32_LEAN_AND_MEAN _WIN32_WINNT=0x0600)
     list(APPEND cilix_libraries psapi iphlpapi userenv ws2_32)
 else()
+	list(APPEND cilix_cflags -Wno-implicit-fallthrough)
+	list(APPEND cilix_cflags -Wno-unused-result)
     list(APPEND cilix_defines _FILE_OFFSET_BITS=64 _LARGEFILE_SOURCE)
     if(NOT CMAKE_SYSTEM_NAME MATCHES "Android|OS390")
         # TODO: This should be replaced with find_package(Threads) if possible
