@@ -55,8 +55,8 @@ void rdc_task_q_get_cb(cilix_task_t* task, void* udata, void* w, cilix_task_q_do
 
     if (q->type == RDC_TASK_Q_TYPE_REQ) {
         // call : func,in,out,ret
-        DLIB_CALL(dlib_func, q->func) {
-            q->ret = df(q->in, q->out);
+		DLIB_CALL(dlib_invoke, DLIB_INVOKE) {
+			q->ret = df(q->func, q->in, &q->out);
         } else { q->ret = SP_RET_ERR_DLIB_FUNC_NOT_EXIST; } }
 
         // print : out
