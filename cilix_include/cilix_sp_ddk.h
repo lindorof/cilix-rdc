@@ -374,6 +374,19 @@ typedef struct sp_cp_json_s {
     sp_cp_json_print_free print_free;
 } sp_cp_json_t;
 
+
+typedef int  (*sp_cp_base64_ensize)(int);
+typedef int (*sp_cp_base64_encode)(char* SourceData, int SourceLen, char* Base64);
+typedef int (*sp_cp_base64_desize)(int);
+typedef int (*sp_cp_base64_decode)(char* Base64, char* DeData, int *DeDataLen);
+
+typedef struct sp_cp_base64_s{
+    sp_cp_base64_ensize base64_ensize;
+    sp_cp_base64_encode base64_encode;  
+    sp_cp_base64_desize base64_desize;
+    sp_cp_base64_decode base64_decode;
+}sp_cp_base64_t;
+
 struct sp_sapp_cp_s {
 	void* def;
 };
@@ -407,6 +420,7 @@ struct sp_dlib_cp_s {
     sp_cp_thread_t* thread;         \
     sp_cp_toml_t* toml;             \
     sp_cp_json_t* json;             \
+    sp_cp_base64_t* base64;  \
 
 struct sp_cp_s {
     SP_CP_FIELDS
