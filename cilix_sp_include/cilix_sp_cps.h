@@ -17,6 +17,7 @@
 #include "cilix_thread.h"
 #include "cilix_toml.h"
 #include "cilix_json.h"
+#include "cilix_base64.h"
 
 typedef struct sp_cps_s {
     SP_CP_FIELDS
@@ -39,6 +40,7 @@ typedef struct sp_cps_s {
     sp_cp_thread_t thread__t;
     sp_cp_toml_t toml__t;
     sp_cp_json_t json__t;
+    sp_cp_base64_t base64__t;
 } sp_cps_t;
 
 void sp_cps_init(sp_cps_t* cps);
