@@ -79,28 +79,26 @@ void*  cilix_json_get_arr_obj(void* obj, int idx) {
 char*  cilix_json_get_arr_str(void* obj, int idx) {
 
 	ISNULLOBJ(obj)
-
-		return 0;
+	
+	return cJSON_GetArrayItem((cJSON*)obj, idx)->valuestring;
 }
 
 int    cilix_json_get_arr_int(void* obj, int idx) {
 
 	ISNULLOBJ(obj)
 
-		return 0;
+		return cJSON_GetArrayItem((cJSON*)obj, idx)->valueint;
 }
 
 double cilix_json_get_arr_double(void* obj, int idx) {
 
 	ISNULLOBJ(obj)
 
-		return 0;
+	return cJSON_GetArrayItem((cJSON*)obj, idx)->valuedouble;
 }
 
 
 void* cilix_json_add_obj(void* obj, char* name) {
-
-	ISNULLPTR(obj, name)
 
 		cJSON* cJSItem = cJSON_CreateObject();
 
@@ -112,16 +110,22 @@ void* cilix_json_add_obj(void* obj, char* name) {
 }
 
 void* cilix_json_add_str(void* obj, char* name, char* val) {
-	ISNULLPTR(obj, name)
+	if (!obj) { return 0; }
 
-		cJSON_bool bRet = cJSON_AddItemToObject((cJSON*)obj, name, cJSON_CreateString(val));
+	cJSON_bool bRet;
+	
+	if(name==NULL && val == NULL) bRet = cJSON_AddItemToObject((cJSON*)obj, "", cJSON_CreateString(""));
+	else if(name == NULL && val != NULL)bRet = cJSON_AddItemToObject((cJSON*)obj, "", cJSON_CreateString(val));
+	else if(name != NULL && val == NULL)bRet = cJSON_AddItemToObject((cJSON*)obj, name, cJSON_CreateString(""));
+	else bRet = cJSON_AddItemToObject((cJSON*)obj, name, cJSON_CreateString(val));
+
 	if (!bRet) {
 		return 0;
 	}return obj;
 }
 
 void* cilix_json_add_int(void* obj, char* name, int val) {
-	ISNULLPTR(obj, name)
+	if (!obj) { return 0; }
 
 		cJSON_bool bRet = cJSON_AddItemToObject((cJSON*)obj, name, cJSON_CreateNumber((int)val));
 	if (!bRet) {
@@ -130,7 +134,7 @@ void* cilix_json_add_int(void* obj, char* name, int val) {
 }
 
 void* cilix_json_add_double(void* obj, char* name, double val) {
-	ISNULLPTR(obj, name)
+	if (!obj) { return 0; }
 
 		cJSON_bool bRet = cJSON_AddItemToObject((cJSON*)obj, name, cJSON_CreateNumber(val));
 	if (!bRet) {
@@ -139,9 +143,10 @@ void* cilix_json_add_double(void* obj, char* name, double val) {
 }
 
 void* cilix_json_add_arr(void* obj, char* name) {
-	ISNULLPTR(obj, name)
-
-		cJSON* cJSArray = cJSON_AddArrayToObject((cJSON*)obj, name);
+	if (!obj) { return 0; }
+	cJSON* cJSArray;
+	if(!name)cJSArray = cJSON_AddArrayToObject((cJSON*)obj, "");
+	else cJSArray = cJSON_AddArrayToObject((cJSON*)obj, name);
 	return (void*)cJSArray;
 }
 
