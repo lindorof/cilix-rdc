@@ -16,7 +16,7 @@ int cilix_base64_encode(char* SourceData, int SourceLen, char* Base64){
 
     memset(out_data,0,out_size);
 
-    out_size = b64_encode(SourceData,SourceLen,out_data);
+    out_size = b64_encode((unsigned char*)SourceData,SourceLen,out_data);
     
     memcpy(Base64,out_data,out_size);
 
@@ -43,7 +43,7 @@ int cilix_base64_decode(char* Base64, char* DeData, int *DeDataLen){
    
     memset(out,0,out_size);
 
-    out_size = b64_decode(Base64,len,out);
+    out_size = b64_decode((unsigned char*)Base64,len,out);
 
     memcpy(DeData,out,out_size);
     

@@ -282,6 +282,20 @@ target_compile_definitions(cilix_rdc PRIVATE ${cilix_defines})
 target_compile_options(cilix_rdc PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_rdc uv_a ${cilix_libraries})
 
+# cilix_rdc_ivk
+aux_source_directory(./cilix_rdc_ivk DIR_RDC_IVK)
+set(cilix_rdc_ivk_src
+    ${DIR_RDC_IVK}
+    ${DIR_CILIXSP}
+    ${DIR_CILIXUV}
+    ${DIR_TOMLC99}
+    ${DIR_BASE64C}
+    ${DIR_CJSON})
+add_library(cilix_rdc_ivk SHARED ${cilix_rdc_ivk_src})
+target_compile_definitions(cilix_rdc_ivk PRIVATE ${cilix_defines})
+target_compile_options(cilix_rdc_ivk PRIVATE ${cilix_cflags})
+target_link_libraries(cilix_rdc_ivk uv_a ${cilix_libraries})
+
 #################################################
 
 message(STATUS "

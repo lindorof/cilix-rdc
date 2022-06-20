@@ -46,7 +46,7 @@ void cilix_test_json(void){
 	
     void* mGet = cilix_json_init(data,strlen(data));
 	char* test1 = cilix_json_get_str(mSet, "test1");
-	printf(">>> test1:\n%d\n<<<", strlen(test1));
+	printf(">>> test1:\n%lu\n<<<", strlen(test1));
 
 	void* mJSOut = cilix_json_get_obj(mGet, "PARA");
 	int iSize = cilix_json_get_arr_size(mJSOut);

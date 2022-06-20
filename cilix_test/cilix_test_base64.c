@@ -82,13 +82,13 @@ void cilix_test_base64(void) {
 }
 int test_cilix_b64_encode(void){
 
-	unsigned char test_a[] = HEXNUM_A;
-	unsigned char test_b[] = HEXNUM_B;
-	unsigned char test_c[] = HEXNUM_C;
+	char test_a[] = HEXNUM_A;
+	char test_b[] = HEXNUM_B;
+	char test_c[] = HEXNUM_C;
 
-	unsigned int size_a = NELEMS(test_a);
-	unsigned int size_b = NELEMS(test_b);
-	unsigned int size_c = NELEMS(test_c);
+	int size_a = NELEMS(test_a);
+	int size_b = NELEMS(test_b);
+	int size_c = NELEMS(test_c);
 
 	int out_size_a = cilix_base64_ensize(size_a) + 1;
 	int out_size_b = cilix_base64_ensize(size_b) + 1;
@@ -149,26 +149,26 @@ int test_b64_encode(void) {
 
 int test_cilix_b64_decode(void){
 
-	unsigned char test_a[] = STRING_A;
-	unsigned char test_b[] = STRING_B;
-	unsigned char test_c[] = STRING_C;
+	char test_a[] = STRING_A;
+	char test_b[] = STRING_B;
+	char test_c[] = STRING_C;
 
-	unsigned int len_a = strlen((char*)test_a);
-	unsigned int len_b = strlen((char*)test_b);
-	unsigned int len_c = strlen((char*)test_c);
+	int len_a = strlen(test_a);
+	int len_b = strlen(test_b);
+	int len_c = strlen(test_c);
 
 	int out_size_a = cilix_base64_desize(len_a);
 	int out_size_b = cilix_base64_desize(len_b);
 	int out_size_c = cilix_base64_desize(len_c);
 
 
-	unsigned char *out_a = malloc( (sizeof(char) * out_size_a) +1);
-	unsigned char *out_b = malloc( (sizeof(char) * out_size_b) +1);
-	unsigned char *out_c = malloc( (sizeof(char) * out_size_c) +1);
+	char *out_a = malloc( (sizeof(char) * out_size_a) +1);
+	char *out_b = malloc( (sizeof(char) * out_size_b) +1);
+	char *out_c = malloc( (sizeof(char) * out_size_c) +1);
 
-	 cilix_base64_decode(test_a,out_a,&out_size_a);
-	 cilix_base64_decode(test_b,out_b,&out_size_b);
-	 cilix_base64_decode(test_c,out_c,&out_size_c);
+	cilix_base64_decode(test_a,out_a,&out_size_a);
+	cilix_base64_decode(test_b,out_b,&out_size_b);
+	cilix_base64_decode(test_c,out_c,&out_size_c);
 	
 	char r_a[] = HEXNUM_A;
 	char r_b[] = HEXNUM_B;
