@@ -162,6 +162,13 @@ void sp_cps_init(sp_cps_t* cps) {
         cps->json->print_free = cilix_json_print_free;
     }
 
+    cps->base64 = &cps->base64__t;{
+        cps->base64->base64_ensize = cilix_base64_ensize;
+        cps->base64->base64_encode = cilix_base64_encode;
+        cps->base64->base64_desize  = cilix_base64_desize;
+        cps->base64->base64_decode = cilix_base64_decode;
+    }
+
 }
 
 sp_cp_t* sp_cp_create(void) {

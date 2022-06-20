@@ -12,6 +12,7 @@ void cilix_test_signal(void);
 void cilix_test_sys(void);
 void cilix_test_base64(void);
 void cilix_test_timeout(void);
+void cilix_test_json(void);
 
 #define _ARGIS(s) if (argc > 2 && CILIX_STRICMP(argv[2],s)==0)
 #define _ARGPARA(i) (argc > (3+i) ? argv[3+i] : "")
@@ -41,7 +42,9 @@ int cilix_test_x(int argc, char **argv)
     _ARGIS("-timeout") {
         cilix_test_timeout();
     }
-
+	_ARGIS("-json") {
+		cilix_test_json();
+	}
     return 0;  
 }
 

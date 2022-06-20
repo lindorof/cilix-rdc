@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "base64.h"
+#include "cilix_base64.h"
 
 //Test values
 ///////////////////////////////////////////////////////////////
@@ -28,6 +29,10 @@
 #define STATUS(x)  score(x)
 #define PERCENT(a,b)  ((float)((float)a/(float)b)*100)
 
+int test_cilix_b64_encode(void);
+int test_cilix_b64_decode(void);
+
+
 int test_b64_encode(void);
 int test_b64_decode(void);
 int test_b64_encodef(void);
@@ -45,6 +50,13 @@ int testScore = 0;
 int testTotal = 0;
 
 void cilix_test_base64(void) {
+
+	test_cilix_b64_decode();
+
+	test_cilix_b64_encode();
+
+
+	return ;
 	
 	puts("\nbase64.c [Test Data]");
 	puts("------------------------------------");
@@ -67,6 +79,39 @@ void cilix_test_base64(void) {
 	puts("------------------------------------");
 	printf("\n[END] Test score: %g%% (%d/%d)\n",PERCENT(testScore,testTotal),testScore,testTotal);
 
+}
+int test_cilix_b64_encode(void){
+
+	unsigned char test_a[] = HEXNUM_A;
+	unsigned char test_b[] = HEXNUM_B;
+	unsigned char test_c[] = HEXNUM_C;
+
+	unsigned int size_a = NELEMS(test_a);
+	unsigned int size_b = NELEMS(test_b);
+	unsigned int size_c = NELEMS(test_c);
+
+	int out_size_a = cilix_base64_ensize(size_a) + 1;
+	int out_size_b = cilix_base64_ensize(size_b) + 1;
+	int out_size_c = cilix_base64_ensize(size_c) + 1;
+
+	char* Base64_a = malloc(sizeof(char*)*out_size_a);
+	char* Base64_b = malloc(sizeof(char*)*out_size_b);
+	char* Base64_c = malloc(sizeof(char*)*out_size_c);
+	
+	cilix_base64_encode(test_a,size_a,Base64_a);
+	cilix_base64_encode(test_b,size_b,Base64_b);
+	cilix_base64_encode(test_c,size_c,Base64_c);
+
+
+	printf("\t%s\t%s\n",STATUS(strcmp((char*)Base64_a,STRING_A)==0),Base64_a);
+	printf("\t%s\t%s\n",STATUS(strcmp((char*)Base64_b,STRING_B)==0),Base64_b);
+	printf("\t%s\t%s\n",STATUS(strcmp((char*)Base64_c,STRING_C)==0),Base64_c);
+
+	free(Base64_a);
+	free(Base64_b);
+	free(Base64_c);
+	
+	return 0;
 }
 
 int test_b64_encode(void) {
@@ -102,6 +147,43 @@ int test_b64_encode(void) {
 	return 0;
 }
 
+int test_cilix_b64_decode(void){
+
+	unsigned char test_a[] = STRING_A;
+	unsigned char test_b[] = STRING_B;
+	unsigned char test_c[] = STRING_C;
+
+	unsigned int len_a = strlen((char*)test_a);
+	unsigned int len_b = strlen((char*)test_b);
+	unsigned int len_c = strlen((char*)test_c);
+
+	int out_size_a = cilix_base64_desize(len_a);
+	int out_size_b = cilix_base64_desize(len_b);
+	int out_size_c = cilix_base64_desize(len_c);
+
+
+	unsigned char *out_a = malloc( (sizeof(char) * out_size_a) +1);
+	unsigned char *out_b = malloc( (sizeof(char) * out_size_b) +1);
+	unsigned char *out_c = malloc( (sizeof(char) * out_size_c) +1);
+
+	 cilix_base64_decode(test_a,out_a,&out_size_a);
+	 cilix_base64_decode(test_b,out_b,&out_size_b);
+	 cilix_base64_decode(test_c,out_c,&out_size_c);
+	
+	char r_a[] = HEXNUM_A;
+	char r_b[] = HEXNUM_B;
+	char r_c[] = HEXNUM_C;
+	
+	printf("\t%s\t",STATUS(compare(r_a,(char*)out_a,NELEMS(r_a)))); hexputs((char*)out_a,out_size_a);
+	printf("\t%s\t",STATUS(compare(r_b,(char*)out_b,NELEMS(r_b)))); hexputs((char*)out_b,out_size_b);
+	printf("\t%s\t",STATUS(compare(r_c,(char*)out_c,NELEMS(r_c)))); hexputs((char*)out_c,out_size_c);
+	
+	free(out_a);
+	free(out_b);
+	free(out_c);
+	
+	return 0;
+}
 int test_b64_decode(void) {
 	
 	unsigned char test_a[] = STRING_A;
@@ -199,7 +281,7 @@ int test_b64_decodef(void) {
 		return 0;
 	
 	int c, l=0;
-	char out[j+1];
+	char* out = (char*)malloc(j + 1);
 	while(c!=EOF) {
 		c=fgetc(pFile);
 		if (c==EOF)
@@ -210,9 +292,11 @@ int test_b64_decodef(void) {
 	remove("B64_TEST02B.tmp");
 	printf("\tComparing \"%s\" to \"",HEXSTR_B); hexprint(out,j); printf("\" : ");
 	char r_b[] = HEXNUM_B;
-	if (compare(r_b,out,j))
+	if (compare(r_b, out, j)) {
+		free(out);
 		return 1;
-	
+
+	}free(out);
 	return 0;
 }
 
