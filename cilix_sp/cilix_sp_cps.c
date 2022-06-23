@@ -3,6 +3,16 @@
 
 #include "cilix_sp_cps.h"
 
+#include "cilix_dlib.h"
+#include "cilix_timeout.h"
+#include "cilix_allocator.h"
+#include "cilix_system.h"
+#include "cilix_mutex.h"
+#include "cilix_thread.h"
+#include "cilix_toml.h"
+#include "cilix_json.h"
+#include "cilix_base64.h"
+
 void sp_cps_init(sp_cps_t* cps) {
 
     memset(cps, 0, sizeof(sp_cps_t)); {

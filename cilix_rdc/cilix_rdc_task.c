@@ -4,6 +4,16 @@
 #include "cilix_sp_ddk.h"
 #include "cilix_rdc_task.h"
 
+#include "cilix_dlib.h"
+#include "cilix_timeout.h"
+#include "cilix_allocator.h"
+#include "cilix_system.h"
+#include "cilix_mutex.h"
+#include "cilix_thread.h"
+#include "cilix_toml.h"
+#include "cilix_json.h"
+#include "cilix_base64.h"
+
 #define DLIB_CALL(sym, str)                                         \
     {                                                               \
         ___##sym df = (___##sym)cilix_dlib_sym(rdc->dlib_h, str);   \
