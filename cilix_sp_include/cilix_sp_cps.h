@@ -1,6 +1,10 @@
 #ifndef _CILIX_SP_CPS_H_
 #define _CILIX_SP_CPS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cilix_sp_ddk.h"
 #include "cilix_sp_exp.h"
 
@@ -34,5 +38,9 @@ void sp_cps_init(sp_cps_t* cps);
 
 SP_CPS_API sp_cp_t* sp_cp_create(void);
 SP_CPS_API void sp_cp_destroy(sp_cp_t* sp_cp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // #ifndef _CILIX_SP_CPS_H_

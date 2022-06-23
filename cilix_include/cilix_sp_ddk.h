@@ -1,6 +1,10 @@
 #ifndef _CILIX_SP_DDK_H_
 #define _CILIX_SP_DDK_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // lindorof.2021.12.08
 
 typedef struct sp_cp_s sp_cp_t;
@@ -425,5 +429,9 @@ struct sp_dlib_cp_s {
 struct sp_cp_s {
     SP_CP_FIELDS
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // #ifndef _CILIX_SP_DDK_H_
