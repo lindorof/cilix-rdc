@@ -7,6 +7,7 @@
 #include "cilix_sp_ddk.h"
 
 #include "cilix_sap.h"
+#include "cilix_sap_req.h"
 #include "cilix_sap_seq.h"
 #include "cilix_sap_frame.h"
 

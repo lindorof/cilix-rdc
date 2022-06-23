@@ -63,7 +63,8 @@ set(lint-no-hides-global-msvc $<$<BOOL:${CILIX_LINT_NO_HIDES_GLOBAL}>:/wd4459>)
 set(lint-no-conditional-assignment-msvc $<$<BOOL:${CILIX_LINT_NO_CONDITIONAL_ASSIGNMENT_MSVC}>:/wd4706>)
 set(lint-no-unsafe-msvc $<$<BOOL:${CILIX_LINT_NO_UNSAFE_MSVC}>:/wd4996>)
 
-#[[ initialization such as 'struct sth = {0}' is not allowed
+#[[
+initialization such as 'struct sth = {0}' is not allowed
 # Unfortunately, this one is complicated because MSVC and clang-cl support -Wall
 # but using it is like calling -Weverything
 string(CONCAT lint-default $<
@@ -238,63 +239,49 @@ include_directories(./cilix_os_config)
 # cilix_sp
 aux_source_directory(./cilix_sp DIR_CILIXSP)
 
-# cilix_spi_ap
-aux_source_directory(./cilix_spi_ap DIR_SPI_AP)
-set(cilix_spi_ap_src
-    ${DIR_SPI_AP}
-    ${DIR_CILIXSP}
-    ${DIR_CILIXUV}
-    ${DIR_TOMLC99}
-    ${DIR_BASE64C}
-    ${DIR_CJSON})
-add_library(cilix_spi_ap SHARED ${cilix_spi_ap_src})
-target_compile_definitions(cilix_spi_ap PRIVATE ${cilix_defines})
-target_compile_options(cilix_spi_ap PRIVATE ${cilix_cflags})
-target_link_libraries(cilix_spi_ap uv_a ${cilix_libraries})
-# set_target_properties(cilix_spi_ap PROPERTIES VERSION ${_CILIX_BUILD_VERSION_3} SOVERSION ${_CILIX_BUILD_VERSION_4})
-
 # cilix_sp_cp
-set(cilix_sp_cp_src
-    ${DIR_CILIXSP}
-    ${DIR_CILIXUV}
-    ${DIR_TOMLC99}
-    ${DIR_BASE64C}
-    ${DIR_CJSON})
+set(cilix_sp_cp_src ${DIR_CILIXSP} ${DIR_CILIXUV} ${DIR_TOMLC99} ${DIR_BASE64C} ${DIR_CJSON})
 add_library(cilix_sp_cp SHARED ${cilix_sp_cp_src})
 target_compile_definitions(cilix_sp_cp PRIVATE ${cilix_defines})
 target_compile_options(cilix_sp_cp PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_sp_cp uv_a ${cilix_libraries})
-# set_target_properties(cilix_sp_cp PROPERTIES VERSION ${_CILIX_BUILD_VERSION_3} SOVERSION ${_CILIX_BUILD_VERSION_4})
+# cilix_sp_cp_a
+add_library(cilix_sp_cp_a STATIC ${cilix_sp_cp_src})
+target_compile_definitions(cilix_sp_cp_a PRIVATE ${cilix_defines})
+target_compile_options(cilix_sp_cp_a PRIVATE ${cilix_cflags})
+target_link_libraries(cilix_sp_cp_a uv_a ${cilix_libraries})
+
+# cilix_spi_ap
+aux_source_directory(./cilix_spi_ap DIR_SPI_AP)
+add_library(cilix_spi_ap SHARED ${DIR_SPI_AP})
+target_compile_definitions(cilix_spi_ap PRIVATE ${cilix_defines})
+target_compile_options(cilix_spi_ap PRIVATE ${cilix_cflags})
+target_link_libraries(cilix_spi_ap uv_a cilix_sp_cp_a ${cilix_libraries})
+# cilix_spi_ap_a
+add_library(cilix_spi_ap_a STATIC ${DIR_SPI_AP})
+target_compile_definitions(cilix_spi_ap_a PRIVATE ${cilix_defines})
+target_compile_options(cilix_spi_ap_a PRIVATE ${cilix_cflags})
+target_link_libraries(cilix_spi_ap_a uv_a cilix_sp_cp_a ${cilix_libraries})
 
 # cilix_rdc
 aux_source_directory(./cilix_test DIR_TEST)
 aux_source_directory(./cilix_rdc DIR_RDC)
-set(cilix_rdc_src
-    ${DIR_TEST}
-    ${DIR_RDC}
-    ${DIR_CILIXSP}
-    ${DIR_CILIXUV}
-    ${DIR_TOMLC99}
-    ${DIR_BASE64C}
-    ${DIR_CJSON})
-add_executable(cilix_rdc ${cilix_rdc_src})
+add_executable(cilix_rdc ${DIR_TEST} ${DIR_RDC})
 target_compile_definitions(cilix_rdc PRIVATE ${cilix_defines})
 target_compile_options(cilix_rdc PRIVATE ${cilix_cflags})
-target_link_libraries(cilix_rdc uv_a ${cilix_libraries})
+target_link_libraries(cilix_rdc uv_a cilix_sp_cp_a ${cilix_libraries})
 
 # cilix_rdc_ivk
 aux_source_directory(./cilix_rdc_ivk DIR_RDC_IVK)
-set(cilix_rdc_ivk_src
-    ${DIR_RDC_IVK}
-    ${DIR_CILIXSP}
-    ${DIR_CILIXUV}
-    ${DIR_TOMLC99}
-    ${DIR_BASE64C}
-    ${DIR_CJSON})
-add_library(cilix_rdc_ivk SHARED ${cilix_rdc_ivk_src})
+add_library(cilix_rdc_ivk SHARED ${DIR_RDC_IVK})
 target_compile_definitions(cilix_rdc_ivk PRIVATE ${cilix_defines})
 target_compile_options(cilix_rdc_ivk PRIVATE ${cilix_cflags})
-target_link_libraries(cilix_rdc_ivk uv_a ${cilix_libraries})
+target_link_libraries(cilix_rdc_ivk uv_a cilix_sp_cp_a ${cilix_libraries})
+# cilix_rdc_ivk_a
+add_library(cilix_rdc_ivk_a STATIC ${DIR_RDC_IVK})
+target_compile_definitions(cilix_rdc_ivk_a PRIVATE ${cilix_defines})
+target_compile_options(cilix_rdc_ivk_a PRIVATE ${cilix_cflags})
+target_link_libraries(cilix_rdc_ivk_a uv_a cilix_sp_cp_a ${cilix_libraries})
 
 #################################################
 
@@ -318,3 +305,15 @@ message(STATUS "
         cilix_cflags:       ${cilix_cflags}
         cilix_libraries:    ${cilix_libraries}
 >>>>> [${CMAKE_PROJECT_NAME}] summary end.")
+
+set(cilix_copy_list
+    "./claux/libuv1.38.1/${_CILIX_BUILD_PATH}/${CMAKE_STATIC_LIBRARY_PREFIX}uv_a${CMAKE_STATIC_LIBRARY_SUFFIX}"
+    "./cilix_include/cilix_sp_ddk.h"
+    "./cilix_sp_include/cilix_sp_cps.h"
+    "./cilix_sp_include/cilix_sp_exp.h"
+    "./cilix_spi_ap/cilix_sap.h"
+    "./cilix_rdc_ivk/cilix_rdc_ivk.h")
+FOREACH(f ${cilix_copy_list})
+    message(STATUS ">>>>> [copy] ${f}")
+    file(COPY "${f}" DESTINATION "${_CILIX_BUILD_PATH}")
+ENDFOREACH(f)

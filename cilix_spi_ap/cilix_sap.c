@@ -8,6 +8,7 @@
 #include "cilix_sp_cps.h"
 
 #include "cilix_sap.h"
+#include "cilix_sap_req.h"
 #include "cilix_sap_frame.h"
 
 sap_frame_t* gsf = 0;
