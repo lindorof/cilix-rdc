@@ -3,6 +3,9 @@
 
 #include "cilix_sp_cps.h"
 
+#include "cilix_os_config.h"
+#include CILIX_STRING_H
+
 #include "cilix_dlib.h"
 #include "cilix_timeout.h"
 #include "cilix_allocator.h"

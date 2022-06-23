@@ -1,13 +1,10 @@
 #ifndef _CILIX_SP_CPS_H_
 #define _CILIX_SP_CPS_H_
 
-#include "cilix_sp_exp.h"
-#define SP_CPS_API _CILIX_SP_EXP
-
-#include "cilix_os_config.h"
-#include CILIX_STRING_H
-
 #include "cilix_sp_ddk.h"
+#include "cilix_sp_exp.h"
+
+#define SP_CPS_API _CILIX_SP_EXP
 
 typedef struct sp_cps_s {
     SP_CP_FIELDS
