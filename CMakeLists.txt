@@ -250,6 +250,7 @@ add_library(cilix_sp_cp_a STATIC ${cilix_sp_cp_src})
 target_compile_definitions(cilix_sp_cp_a PRIVATE ${cilix_defines})
 target_compile_options(cilix_sp_cp_a PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_sp_cp_a uv_a ${cilix_libraries})
+set_property(TARGET cilix_sp_cp_a PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # cilix_spi_ap
 aux_source_directory(./cilix_spi_ap DIR_SPI_AP)
@@ -262,6 +263,7 @@ add_library(cilix_spi_ap_a STATIC ${DIR_SPI_AP})
 target_compile_definitions(cilix_spi_ap_a PRIVATE ${cilix_defines})
 target_compile_options(cilix_spi_ap_a PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_spi_ap_a uv_a cilix_sp_cp_a ${cilix_libraries})
+set_property(TARGET cilix_spi_ap_a PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # cilix_rdc
 aux_source_directory(./cilix_test DIR_TEST)
@@ -282,6 +284,7 @@ add_library(cilix_rdc_ivk_a STATIC ${DIR_RDC_IVK})
 target_compile_definitions(cilix_rdc_ivk_a PRIVATE ${cilix_defines})
 target_compile_options(cilix_rdc_ivk_a PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_rdc_ivk_a uv_a cilix_sp_cp_a ${cilix_libraries})
+set_property(TARGET cilix_rdc_ivk_a PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #################################################
 
