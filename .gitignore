@@ -156,6 +156,7 @@ ipch/
 # Visual Studio profiler @20220520
 *.vcxproj
 *.vcxproj.filters
+*.sln
 
 # Visual Studio Trace Files
 *.e2e
