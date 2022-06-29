@@ -53,7 +53,7 @@ void rdc_fini(void* prdc) {
     free(rdc);
 }
 
-int rdc_invoke(void* prdc, char* fun, char* in, int inlen, void*** out) {
+char* rdc_invoke(void* prdc, char* fun, char* in, int inlen, int* pret) {
     rdc_t* rdc = (rdc_t*)prdc;
     int ret = 0;
 
@@ -64,20 +64,15 @@ int rdc_invoke(void* prdc, char* fun, char* in, int inlen, void*** out) {
         ret = df(fun, jin, jout);
     } else { ret = SP_RET_ERR_DLIB_FUNC_NOT_EXIST; } }
 
-    void** ro = (void**)malloc(sizeof(void*) * 3);
-    ro[0] = cilix_json_print(jout);
-    ro[1] = jout;
-    ro[2] = jin;
-
-    *out = ro;
-    return ret;
+    *pret = ret;
+    char* out = cilix_json_print(jout);
+    cilix_json_destroy(jin);
+    cilix_json_destroy(jout);
+    return out;
 }
 
-void rdc_invoke_free(void* rdc, void** out) {
+void rdc_invoke_free(void* rdc, char* out) {
     if (out == 0) return;
 
-    cilix_json_print_free(out[0]);
-    cilix_json_destroy(out[1]);
-    cilix_json_destroy(out[2]);
-    free(out);
+    cilix_json_print_free(out);
 }
