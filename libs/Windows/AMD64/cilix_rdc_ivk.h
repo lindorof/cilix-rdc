@@ -13,8 +13,8 @@ extern "C" {
 
 RDC_IVK_API void* rdc_init(char* phy, char* drv);
 RDC_IVK_API void rdc_fini(void* rdc);
-RDC_IVK_API int rdc_invoke(void* rdc, char* fun, char* in, int inlen, void*** out);
-RDC_IVK_API void rdc_invoke_free(void* rdc, void** out);
+RDC_IVK_API char* rdc_invoke(void* rdc, char* fun, char* in, int inlen, int* ret);
+RDC_IVK_API void rdc_invoke_free(void* rdc, char* out);
 
 #ifdef __cplusplus
 }
