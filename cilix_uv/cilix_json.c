@@ -284,9 +284,8 @@ void* cilix_json_add_arr_double(void* obj, char* name, double val) {
 }
 
 char* cilix_json_print(void* obj) {
-	if (!obj) {
-		return 0;
-	}return  cJSON_Print(obj);
+	json_data_t *ct = (json_data_t *)obj;
+	return cJSON_Print(ct->cJS);
 }
 
 void cilix_json_print_free(char* text) {
