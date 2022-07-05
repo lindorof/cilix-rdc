@@ -10,6 +10,8 @@ void cilix_json_destroy(void* obj);
 
 void*  cilix_json_get_obj(void* obj, char* name);
 char*  cilix_json_get_str(void* obj, char* name);
+char*  cilix_json_get_gstr(void* obj, char* name);
+char*  cilix_json_get_64str(void* obj, char* name, int* len);
 int    cilix_json_get_int(void* obj, char* name);
 double cilix_json_get_double(void* obj, char* name);
 
@@ -17,17 +19,23 @@ void*  cilix_json_get_arr(void* obj, char* name);
 int    cilix_json_get_arr_size(void* obj);
 void*  cilix_json_get_arr_obj(void* obj, int idx);
 char*  cilix_json_get_arr_str(void* obj, int idx);
+char*  cilix_json_get_arr_gstr(void* obj, int idx);
+char*  cilix_json_get_arr_64str(void* obj, int idx, int* len);
 int    cilix_json_get_arr_int(void* obj, int idx);
 double cilix_json_get_arr_double(void* obj, int idx);
 
 void* cilix_json_add_obj(void* obj, char* name);
 void* cilix_json_add_str(void* obj, char* name, char* val);
+void* cilix_json_add_gstr(void* obj, char* name, char* val);
+void* cilix_json_add_64str(void* obj, char* name, char* val, int len);
 void* cilix_json_add_int(void* obj, char* name, int val);
 void* cilix_json_add_double(void* obj, char* name, double val);
 
 void* cilix_json_add_arr(void* obj, char* name);
 void* cilix_json_add_arr_obj(void* obj, char* name);
 void* cilix_json_add_arr_str(void* obj, char* name, char* val);
+void* cilix_json_add_arr_gstr(void* obj, char* name, char* val);
+void* cilix_json_add_arr_64str(void* obj, char* name, char* val, int len);
 void* cilix_json_add_arr_int(void* obj, char* name, int val);
 void* cilix_json_add_arr_double(void* obj, char* name, double val);
 
