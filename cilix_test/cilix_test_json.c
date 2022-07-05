@@ -4,82 +4,78 @@
 
 #include "cilix_json.h"
 
-void cilix_test_json(void){
-    void* mSet =  cilix_json_init("",0);
-	
-	cilix_json_add_str(mSet, "test1", NULL);
-	cilix_json_add_str(mSet, NULL, NULL);
-	cilix_json_add_str(mSet, NULL, "adf");
-	cilix_json_add_str(mSet, "asldf", "adf");
+void cilix_test_json(void) {
 
-	void* mJSChild = cilix_json_add_arr(mSet,"PARA");
+	void* mSet = cilix_json_init("", 0);
+	cilix_json_add_int(mSet, "HS", 1);
+	cilix_json_add_int(mSet, "ID", 2);
+	cilix_json_add_int(mSet, "CODE", 10);
+	cilix_json_add_int(mSet, "TIMEOUT", 0);
 
-	void* mJSChild_1 = cilix_json_add_arr(mJSChild, NULL);
-	cilix_json_add_str(mJSChild_1, NULL, "TRACK2:MII = 59");
-	cilix_json_add_str(mJSChild_1,NULL , "COUNTRY = 280");
-	cilix_json_add_str(mJSChild_1, NULL, "ISSUERID = 50050500");
-	cilix_json_add_str(mJSChild_1, NULL, "LUHNT3 = 1");
+	void* mJSAux = cilix_json_add_obj(mSet, "AUX");
+	cilix_json_add_str(mJSAux, "LOGIC", "CardReader");
+	cilix_json_add_str(mJSAux, "HWND", "/usr/lfs/linter");
+	cilix_json_add_str(mJSAux, "REGHWND", "/usr/lfs/linter11");
+	cilix_json_add_int(mJSAux, "REGEVT", 10);
 
-	void* mJSChild_2 = cilix_json_add_arr(mJSChild, "");
-	cilix_json_add_str(mJSChild_2, "", "TRACK3:MII = 30");
-	cilix_json_add_str(mJSChild_2, "", "COUNTRY = 281");
-	cilix_json_add_str(mJSChild_2, "", "ISSUERID = 51050500");
-	cilix_json_add_str(mJSChild_2, "", "LUHNT3 = 2");
-	/* void* mJSChild = cilix_json_add_obj(mSet,"LFSReadRaw");
-    cilix_json_add_int(mJSChild,"Len",10);
-    cilix_json_add_str(mJSChild,"Data","123456789");
-   
-    cilix_json_add_arr(mJSChild,"sites");
+	void* lP1 = cilix_json_add_obj(mSet, "PARA");
 
-   void* mJSSit1= cilix_json_add_arr_obj(mJSChild,"sites");
-   cilix_json_add_arr_str(mJSSit1,"a","234");
-   cilix_json_add_arr_int(mJSSit1,"b",2);
-   cilix_json_add_arr_double(mJSSit1,"c",2.11);
+	cilix_json_add_str(lP1, "FormName", "PrintForm");
+	cilix_json_add_gstr(lP1, "TrackData", "PrintForm");
+	cilix_json_add_64str(lP1, "WriteMethod", "PrintForm", 9);
 
-   void* mJSSit2 = cilix_json_add_arr_obj(mJSChild,"sites");
-   cilix_json_add_arr_str(mJSSit2,"a","234");
-   cilix_json_add_arr_int(mJSSit2,"b",2);
-   cilix_json_add_arr_double(mJSSit2,"c",2.11);*/
+	void* mJSArrSit1 = cilix_json_add_arr(lP1, "CardData");
 
-    char * data = cilix_json_print(mSet);
-    printf(">>> data:\n%s\n<<<", data);
-	
-    void* mGet = cilix_json_init(data,strlen(data));
-	char* test1 = cilix_json_get_str(mSet, "test1");
-	printf(">>> test1:\n%lu\n<<<", strlen(test1));
+	void* mJSSit1 = cilix_json_add_obj(mJSArrSit1, "");
+	cilix_json_add_arr_str(mJSSit1, "a", "45324");
+	cilix_json_add_arr_int(mJSSit1, "b", 2);
+	cilix_json_add_arr_double(mJSSit1, "c", 2.11);
+	cilix_json_add_arr_gstr(mJSSit1, "GFormName", "PrintForm");
+	cilix_json_add_arr_64str(mJSSit1, "64FormName", "PrintForm", 9);
+
+	void* mJSSit2 = cilix_json_add_arr_obj(mJSArrSit1, "");
+	cilix_json_add_arr_str(mJSSit2, "a", "234");
+	cilix_json_add_arr_int(mJSSit2, "b", 2);
+	cilix_json_add_arr_double(mJSSit2, "c", 2.11);
+	cilix_json_add_arr_gstr(mJSSit2, "GFormName", "PrintForm");
+	cilix_json_add_arr_64str(mJSSit2, "64FormName", "PrintForm", 9);
+
+
+	char * data = cilix_json_print(mSet);
+	printf("cilix_json_print:\n%s\n", data);
+
+	void* mGet = cilix_json_init(data, strlen(data));
+
+
+	printf("HS:%d ID:%d \n", cilix_json_get_int(mGet, "HS"), cilix_json_get_int(mGet, "ID"));
+	char *grData = cilix_json_get_gstr(mGet, "GFormName");
+	printf("GFormName:%s\n", grData);
+	int rlen = 0;
+	char *rData = cilix_json_get_64str(mGet, "64FormName", &rlen);
+	printf("64FormName:%s,rlen:%d\n", rData, rlen);
+
 
 	void* mJSOut = cilix_json_get_obj(mGet, "PARA");
-	int iSize = cilix_json_get_arr_size(mJSOut);
-	printf("PARA Size:%d\n", iSize);
-	for (int i = 0; i < iSize; i++) {
-		void* mJSOut1 = cilix_json_get_arr_obj(mJSOut, i);
-		int iSize_ = cilix_json_get_arr_size(mJSOut1);
-		printf("%d Size:%d\n",i, iSize_);
-		for (int j = 0; j < iSize_; j++) {
-			printf("i = %d,j = %d data:%s\n", i,j,cilix_json_get_arr_str(mJSOut1, j));
-		}
-	}
-	
 
-    /*void* mJSOut= cilix_json_get_obj(mGet,"LFSReadRaw");
-    
-    printf("Len:%d\n",cilix_json_get_int(mJSOut,"Len"));
-    printf("Data:%s\n",cilix_json_get_str(mJSOut,"Data"));
-    printf("Data:%s\n",cilix_json_get_str(mJSOut,"Data"));
+	printf("FormName:%s\n", cilix_json_get_str(mJSOut, "FormName"));
+	printf("GFormName:%s\n", cilix_json_get_gstr(mJSOut, "GFormName"));
 
-    void* mJSArr = cilix_json_get_obj(mJSOut,"sites");
-    
-    printf("ArrSize:%d\n",cilix_json_get_arr_size(mJSArr));
+	printf("64FormName:%s\n", cilix_json_get_64str(mJSOut, "64FormName", &rlen));
 
-    void* mJSOut1  = cilix_json_get_arr_obj(mJSArr,0);
-    printf("a:%s\n",cilix_json_get_str(mJSOut1,"a"));
-    printf("b:%d\n",cilix_json_get_int(mJSOut1,"b"));
-     printf("c:%.2f\n",cilix_json_get_double(mJSOut1,"c"));
+	void* mJSArr = cilix_json_get_obj(mJSOut, "CardData");
 
-    void* mJSOut2  = cilix_json_get_arr_obj(mJSArr,1);
-    printf("a:%s\n",cilix_json_get_str(mJSOut2,"a"));
-    printf("b:%d\n",cilix_json_get_int(mJSOut2,"b"));
-     printf("c:%.2f\n",cilix_json_get_double(mJSOut2,"c*/
+	printf("ArrSize:%d\n", cilix_json_get_arr_size(mJSArr));
 
-  return ;
+	void* mJSOut1 = cilix_json_get_arr_obj(mJSArr, 0);
+	printf("a:%s\n", cilix_json_get_str(mJSOut1, "a"));
+	printf("b:%d\n", cilix_json_get_int(mJSOut1, "b"));
+	printf("c:%.2f\n", cilix_json_get_double(mJSOut1, "c"));
+	//printf("c:%.2f\n", cilix_json_get_arr_gstr(mJSOut1, 0));
+
+	void* mJSOut2 = cilix_json_get_arr_obj(mJSArr, 1);
+	printf("a:%s\n", cilix_json_get_str(mJSOut2, "a"));
+	printf("b:%d\n", cilix_json_get_int(mJSOut2, "b"));
+	printf("c:%.2f\n", cilix_json_get_double(mJSOut2, "c"));
+
+
 }
