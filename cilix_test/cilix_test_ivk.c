@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../cilix_rdc_ivk/cilix_rdc_ivk.h"
+#include "cilix_rdc_ivk.h"
 
 void cilix_test_ivk(char *pyh, char *drv,char *func, char *in, int len)
 {

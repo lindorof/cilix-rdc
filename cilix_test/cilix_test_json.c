@@ -21,21 +21,21 @@ void cilix_test_json(void) {
 	void* lP1 = cilix_json_add_obj(mSet, "PARA");
 
 	cilix_json_add_str(lP1, "FormName", "PrintForm");
-	cilix_json_add_gstr(lP1, "TrackData", "PrintForm");
-	cilix_json_add_64str(lP1, "WriteMethod", "PrintForm", 9);
+	cilix_json_add_gstr(lP1, "GFormName", "PrintForm");
+	cilix_json_add_64str(lP1, "64FormName", "PrintForm", 9);
 
 	void* mJSArrSit1 = cilix_json_add_arr(lP1, "CardData");
 
 	void* mJSSit1 = cilix_json_add_obj(mJSArrSit1, "");
 	cilix_json_add_arr_str(mJSSit1, "a", "45324");
-	cilix_json_add_arr_int(mJSSit1, "b", 2);
+	cilix_json_add_arr_int(mJSSit1, "b", 0);
 	cilix_json_add_arr_double(mJSSit1, "c", 2.11);
 	cilix_json_add_arr_gstr(mJSSit1, "GFormName", "PrintForm");
 	cilix_json_add_arr_64str(mJSSit1, "64FormName", "PrintForm", 9);
 
 	void* mJSSit2 = cilix_json_add_arr_obj(mJSArrSit1, "");
 	cilix_json_add_arr_str(mJSSit2, "a", "234");
-	cilix_json_add_arr_int(mJSSit2, "b", 2);
+	cilix_json_add_arr_int(mJSSit2, "b", 1);
 	cilix_json_add_arr_double(mJSSit2, "c", 2.11);
 	cilix_json_add_arr_gstr(mJSSit2, "GFormName", "PrintForm");
 	cilix_json_add_arr_64str(mJSSit2, "64FormName", "PrintForm", 9);
@@ -46,21 +46,15 @@ void cilix_test_json(void) {
 
 	void* mGet = cilix_json_init(data, strlen(data));
 
-
 	printf("HS:%d ID:%d \n", cilix_json_get_int(mGet, "HS"), cilix_json_get_int(mGet, "ID"));
-	char *grData = cilix_json_get_gstr(mGet, "GFormName");
-	printf("GFormName:%s\n", grData);
-	int rlen = 0;
-	char *rData = cilix_json_get_64str(mGet, "64FormName", &rlen);
-	printf("64FormName:%s,rlen:%d\n", rData, rlen);
-
-
+	
 	void* mJSOut = cilix_json_get_obj(mGet, "PARA");
 
 	printf("FormName:%s\n", cilix_json_get_str(mJSOut, "FormName"));
 	printf("GFormName:%s\n", cilix_json_get_gstr(mJSOut, "GFormName"));
-
-	printf("64FormName:%s\n", cilix_json_get_64str(mJSOut, "64FormName", &rlen));
+	int rlen = 0;char* rcvData = 0;
+	rcvData = cilix_json_get_64str(mJSOut, "64FormName", &rlen);
+	printf("64FormName:%s len:%d\n", rcvData, rlen);
 
 	void* mJSArr = cilix_json_get_obj(mJSOut, "CardData");
 
