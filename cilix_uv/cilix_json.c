@@ -59,7 +59,7 @@ char*  cilix_json_get_gstr(void* obj, char* name) {
 	int len = strlen(str);
 	int dLen = b64d_size(len);
 	char* deData = cilix_alloc_more(dLen, ct->buff);
-	dLen = b64_decode((unsigned char *)str, len, deData);
+	dLen = b64_decode((unsigned char *)str, len, (unsigned char*)deData);
 	deData[dLen] = '\0';
 	return deData;
 }
@@ -70,7 +70,7 @@ char*  cilix_json_get_64str(void* obj, char* name, int* len) {
 	int tlen = strlen(str);
 	int eLen = b64d_size(tlen);
 	char* deData = cilix_alloc_more(eLen + 1, ct->buff);
-	eLen = b64_decode((unsigned char *)str, tlen, deData);
+	eLen = b64_decode((unsigned char *)str, tlen, (unsigned char*)deData);
 	deData[eLen] = '\0';
 	if (len) {
 		*len = eLen;
@@ -116,7 +116,7 @@ char*  cilix_json_get_arr_gstr(void* obj, int idx) {
 	int len = strlen(str);
 	int dLen = b64d_size(len);
 	char* deData = cilix_alloc_more(dLen, ct->buff);
-	dLen = b64_decode((unsigned char *)str, len, deData);
+	dLen = b64_decode((unsigned char *)str, len, (unsigned char*)deData);
 	deData[dLen] = '\0';
 	return deData;
 }
@@ -127,7 +127,7 @@ char*  cilix_json_get_arr_64str(void* obj, int idx, int* len) {
 	int tlen = strlen(str);
 	int eLen = b64d_size(tlen);
 	char* deData = cilix_alloc_more(eLen + 1, ct->buff);
-	eLen = b64_decode((unsigned char *)str, tlen, deData);
+	eLen = b64_decode((unsigned char *)str, tlen, (unsigned char*)deData);
 	deData[eLen] = '\0';
 	if (len) {
 		*len = eLen;
@@ -174,7 +174,7 @@ void* cilix_json_add_gstr(void* obj, char* name, char* val){
 	int eLen = b64e_size(len);
 	char *enData = (char *)malloc(sizeof(char *) * eLen + 1);
 	memset(enData, 0, sizeof(char *) * eLen + 1);
-	b64_encode((unsigned char *)val, len, enData);
+	b64_encode((unsigned char *)val, len, (unsigned char*)enData);
 	cJSON_bool bRet = cJSON_AddItemToObject(ct->cJS, name, cJSON_CreateString(enData));
 	free(enData);
 	if (!bRet) {
@@ -187,7 +187,7 @@ void* cilix_json_add_64str(void* obj, char* name, char* val, int len) {
 	int eLen = b64e_size(len);
 	char *enData = (char *)malloc(sizeof(char *) * eLen + 1);
 	memset(enData, 0, sizeof(char *) * eLen + 1);
-	b64_encode((unsigned char *)val, len, enData);
+	b64_encode((unsigned char *)val, len, (unsigned char*)enData);
 	cJSON_bool bRet = cJSON_AddItemToObject(ct->cJS, name, cJSON_CreateString(enData));
 	free(enData);
 	if (!bRet) {
@@ -249,7 +249,7 @@ void* cilix_json_add_arr_gstr(void* obj, char* name, char* val) {
 	char *enData = (char *)malloc(sizeof(char *) * eLen + 1);
 	memset(enData, 0, sizeof(char *) * eLen + 1);
 
-	b64_encode((unsigned char *)val, len, enData);
+	b64_encode((unsigned char *)val, len, (unsigned char*)enData);
 
 	cJSON_bool bRet = cJSON_AddItemToObject(ct->cJS, name, cJSON_CreateString(enData));
 	free(enData);
@@ -263,7 +263,7 @@ void* cilix_json_add_arr_64str(void* obj, char* name, char* val, int len) {
 	int eLen = b64e_size(len);
 	char *enData = (char *)malloc(sizeof(char *) * eLen + 1);
 	memset(enData, 0, sizeof(char *) * eLen + 1);
-	b64_encode((unsigned char *)val, len, enData);
+	b64_encode((unsigned char *)val, len, (unsigned char*)enData);
 	cJSON_bool bRet = cJSON_AddItemToObject(ct->cJS, name, cJSON_CreateString(enData));
 	free(enData);
 	if (!bRet) {
