@@ -13,6 +13,7 @@ void cilix_test_sys(void);
 void cilix_test_base64(void);
 void cilix_test_timeout(void);
 void cilix_test_json(void);
+void cilix_test_ivk(char *pyh, char *drv, char* func, char* in, int len);
 
 #define _ARGIS(s) if (argc > 2 && CILIX_STRICMP(argv[2],s)==0)
 #define _ARGPARA(i) (argc > (3+i) ? argv[3+i] : "")
@@ -44,6 +45,9 @@ int cilix_test_x(int argc, char **argv)
     }
 	_ARGIS("-json") {
 		cilix_test_json();
+	}
+	_ARGIS("-ivk") {
+		cilix_test_ivk(argv[3], argv[4], argv[5], argv[6], atoi(argv[7]));
 	}
     return 0;  
 }

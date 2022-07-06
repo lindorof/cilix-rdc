@@ -236,6 +236,9 @@ include_directories(./cilix_sp_include)
 # os_config headers
 include_directories(./cilix_os_config)
 
+# rdc_ivk headers
+include_directories(./cilix_rdc_ivk)
+
 # cilix_sp
 aux_source_directory(./cilix_sp DIR_CILIXSP)
 
@@ -266,9 +269,10 @@ target_link_libraries(cilix_spi_ap_a uv_a cilix_sp_cp_a ${cilix_libraries})
 set_property(TARGET cilix_spi_ap_a PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # cilix_rdc
+aux_source_directory(./cilix_rdc_ivk DIR_RDC_IVK)
 aux_source_directory(./cilix_test DIR_TEST)
 aux_source_directory(./cilix_rdc DIR_RDC)
-add_executable(cilix_rdc ${DIR_TEST} ${DIR_RDC})
+add_executable(cilix_rdc ${DIR_TEST} ${DIR_RDC} ${DIR_RDC_IVK})
 target_compile_definitions(cilix_rdc PRIVATE ${cilix_defines})
 target_compile_options(cilix_rdc PRIVATE ${cilix_cflags})
 target_link_libraries(cilix_rdc uv_a cilix_sp_cp_a ${cilix_libraries})
